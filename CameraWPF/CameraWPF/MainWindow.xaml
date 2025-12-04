@@ -1,0 +1,153 @@
+﻿<Window x:Class="CameraWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CameraWPF"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="5">
+
+            <GroupBox Header="Device Login">
+                <StackPanel Orientation="Horizontal" Margin="5">
+
+                    <TextBlock x:Name="textIP" Text="IP:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="ip_textBox" Width="120" Margin="5,0"/>
+
+                    <TextBlock x:Name="textPort" Text="Port:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="port_textBox" PreviewTextInput="txtNumber_PreviewTextInput" Width="120" Margin="5,0"/>
+
+                    <TextBlock x:Name="textName" MouseDown="textName_MouseDown" Text="Name:" VerticalAlignment="Center"/>
+                    <TextBox  x:Name="name_textBox" Width="120" Margin="5,0"/>
+
+                    <TextBlock x:Name="textPassword" MouseDown="textPassword_MouseDown" Text="Pwd:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="pwd_textBox" Width="120" Margin="5,0"/>
+
+                    <Button x:Name="login_button" Content="Login" Width="90" Margin="10,0" Click="Login_Click"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+
+
+        <Border Grid.Row="1" Grid.Column="0"
+                BorderBrush="Gray" BorderThickness="1"
+                Margin="5" Background="White">
+            <wfi:WindowsFormsHost Name="videoHost" ChildChanged="videoHost_ChildChanged">
+                <wf:Panel x:Name="realplay_pictureBox" />
+            </wfi:WindowsFormsHost>
+        </Border>
+
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
+            <GroupBox Header="Preview">
+                <StackPanel>
+                    <TextBlock Text="Channel"/>
+                    <ComboBox x:Name="channel_comboBox">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                        <ComboBoxItem>3</ComboBoxItem>
+                        <ComboBoxItem>4</ComboBoxItem>
+                        <ComboBoxItem>5</ComboBoxItem>
+                        <ComboBoxItem>6</ComboBoxItem>
+                        <ComboBoxItem>7</ComboBoxItem>
+                    </ComboBox>
+                    <TextBlock Text="Stream Type"/>
+                    <ComboBox x:Name="streamtype_comboBox">
+                        <ComboBoxItem>Main Stream</ComboBoxItem>
+                        <ComboBoxItem>Extra Stream</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="start_realplay_button" Content="StartReal" Margin="0 5 0 0" Click="start_realplay_button_Click"/>
+                    <Button x:Name="capture_realplay_button" Content="capture" Margin="0 5 0 0" Click="capture_realplay_button_Click"/>
+                    <Button x:Name="Start_save_button" Content="StartSave" Margin="0 5 0 0" Click="start_save_realplay_button_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="StreamConverter">
+                <StackPanel>
+                    <TextBlock Text="Stream_Type"/>
+                    <ComboBox x:Name="Stream_Type">
+                        <ComboBoxItem>1</ComboBoxItem>
+                        <ComboBoxItem>2</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="play_button" Content="Play" Margin="0 5 0 0" Click="play_button_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="PTZControl">
+                <StackPanel Margin="5">
+                    <!-- Directional Controls -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="↖" Width="20" Height="20" Grid.Row="0" Grid.Column="0" Click="ptz_leftup_Click" Margin="45 0 0 0"/>
+                        <Button Content="↑" Width="20" Height="20" Grid.Row="0" Grid.Column="1" Click="ptz_up_Click" Margin="5 0 0 0"/>
+                        <Button Content="↗" Width="20" Height="20" Grid.Row="0" Grid.Column="2" Click="ptz_rightup_Click" Margin="5 0 0 0"/>
+
+                        <Button Content="←" Width="20" Height="20" Grid.Row="1" Grid.Column="0" Click="ptz_left_Click" Margin="45 3 0 0"/>
+                        <Button Content="→" Width="20" Height="20" Grid.Row="1" Grid.Column="2" Click="ptz_right_Click" Margin="5 3 0 0"/>
+
+                        <Button Content="↙" Width="20" Height="20" Grid.Row="2" Grid.Column="0" Click="ptz_leftdown_Click" Margin="45 3 0 0"/>
+                        <Button Content="↓" Width="20" Height="20" Grid.Row="2" Grid.Column="1" Click="ptz_down_Click" Margin="5 3 0 0"/>
+                        <Button Content="↘" Width="20" Height="20" Grid.Row="2" Grid.Column="2" Click="ptz_rightdown_Click" Margin="5 3 0 0"/>
+
+                    </Grid>
+
+                    <!-- Step Length -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock Text="Step Len:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="stepLen_textBox" Width="100" Margin="5,0"/>
+                    </StackPanel>
+
+                    <!-- Zoom Controls -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock Text="Zoom:" VerticalAlignment="Center"/>
+                        <Button Content="+" Width="30" Margin="28,0" Click="zoom_in_Click"/>
+                        <Button Content="-" Width="30" Click="zoom_out_Click"/>
+                    </StackPanel>
+
+                    <!-- Focus Controls -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock Text="Focus:" VerticalAlignment="Center"/>
+                        <Button Content="+" Width="30" Margin="28,0" Click="focus_in_Click"/>
+                        <Button Content="-" Width="30" Click="focus_out_Click"/>
+                    </StackPanel>
+
+                    <!-- Focus Controls -->
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock Text="Aperture:" VerticalAlignment="Center"/>
+                        <Button Content="+" Width="31" Margin="12,0" Click="aperture_open_Click"/>
+                        <Button Content="-" Width="30" Margin="15 0 0 0" Click="aperture_close_Click"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </GroupBox>
+
+
+
+        </StackPanel>
+
+
+    </Grid>
+</Window>
